@@ -1,0 +1,237 @@
+<html>
+<head>
+<title>Register Forms</title> 
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+    <style>
+        #alert{
+            display: none;
+        }
+    
+    </style>
+
+</head>
+<body class="bg-secondary">
+    <div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 text-center" id="alert">
+        <div class="alert alert-success">
+        
+        <strong id="result"></strong>
+        <style>
+            
+        </style>
+        </div>
+        </div>
+    </div>   
+        <div class="container">
+        <div class="row justify-content-center">
+        
+        <div class="col-lg-4 bg-light rounded" id="Registerbox">
+        <h2 class="text-center mt-2">Register</h2>
+         <form action="" method="post" class="p-2" id="register1-frm">
+           
+             <div class="form-group">
+             <input type="text" name="username" class="form-control" placeholder="Username" id="user">
+                 <h7 class="usercheck"></h7>
+            </div>
+             
+             <div class="form-group">
+             <input type="email" name="email" class="form-control " placeholder="user@example.com" id="email">
+                  <h7 class="emailcheck"></h7>
+            </div>
+             
+             
+            
+             
+             <div class="form-group">
+             <input type="password" name="password" class="form-control" placeholder="password" id="pass"  >
+                  <h7 class="passwordcheck"></h7>
+            </div>
+             
+             <div class="form-group">
+             <input type="password" name="cpwd" class="form-control" placeholder="confirmpassword" id="cpass" >
+                  <h7 class="cpasscheck "></h7>
+            </div>
+                         
+             <div class="form-group">
+                 <input class="btn btn-primary btn-block" name="Register" value="Register" type="submit" id="register">
+            </div>
+            
+             <div class="form-group">
+             
+                 <p class="text-center">Already Registered? <a href="login1.php" id="login-btn">Login Here</a></p>
+             </div>
+        </form>
+            
+            </div>
+            
+            
+            </div>    
+            
+            </div>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    
+   
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    
+    
+     <script type="text/javascript">
+    
+  $(document).ready(function()
+                   {
+      $('.usercheck').hide();
+      $('.emailcheck').hide();
+      $('.passwordcheck').hide();
+      $('.cpasscheck').hide();
+   
+        var user_err=false;
+        var email_err=false;
+        var pass_err=false;
+        var cpass_err=false;
+      
+      $("#user").focusout(function(){
+         check_username();
+      });
+      
+          
+      $("#pass").focusout(function(){
+          check_password();
+      });
+              
+      $("#cpass").focusout(function()
+                          {
+         check_confirmpass(); 
+      });
+      
+      $("#email").focusout(function()
+                          {
+          check_email();
+      });
+          function check_username() {
+	
+		var user_length = $("#user").val().length;
+		
+		if(user_length < 5 || user_length > 20) {
+			$(".usercheck").html("Should be between 5-20 characters");
+			$(".usercheck").show();
+			user_err = true;
+		} else {
+			$(".usercheck").hide();
+		}
+	
+	}
+ function check_password()
+      {
+                    var password_length=$("#pass").val().length;
+                    if(password_length <8)
+                        {
+                        $(".passwordcheck").html("At least 6 characters");
+                        $(".passwordcheck").show();
+                        pass_err=true;
+                        }
+             else
+                 {
+                     $(".passwordcheck").hide();
+                 }
+            }
+      
+            function check_confirmpass()
+         {
+             
+             var pass1=$("#pass").val();
+             var confirmpass=$("#cpass").val();
+             if(pass1 != confirmpass)
+                 {
+                $(".cpasscheck").html("password didnt match");
+                $(".cpasscheck").show();
+                cpass_err=true;
+                                
+                 }
+             else{
+                 $(".cpasscheck").hide();   
+             }
+         }
+            
+       function check_email()
+      {
+     var pattern = new RegExp(/^[+a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i);
+	
+		if(pattern.test($("#email").val())) {
+			$(".emailcheck").hide();
+		} else {
+			$(".emailcheck").html("Invalid email address");
+			$(".emailcheck").show();
+			error_email = true;
+		}
+	
+      }
+      $("#register1-frm").submit(function() {
+											
+		var user_err=false;
+        var email_err=false;
+        var pass_err=false;
+        var cpass_err=false;
+											
+		check_username();
+		check_password();
+		check_confirmpass();
+		check_email();
+		
+		if(user_err == false && email_er == false && pass_err == false && cpass_err == false)
+        {
+			return true;
+            
+		} else
+        {
+			return false;	
+		}
+
+	});
+      $("register1-frm").validate();
+      $("#register").click(function(e){
+          if(document.getElementById('register1-frm').checkValidity())
+        {
+        e.preventDefault();
+        $.ajax({
+           url:'action1.php',
+            method:'post',
+            data:$('#register1-frm').serialize()+'&action=register',
+            success:function(response)
+        {
+            $('#alert').show();
+            $('#result').html(response);
+        }
+            
+            
+        });
+    
+        }
+          return true;
+      });
+      
+    
+  });
+        </script>
+        
+    
+    </body>
+</html>
+        
+        
